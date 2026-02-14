@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreative Reflow Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #1a1a1a;
+      --bg-surface: #242424;
+      --bg-card: #2a2a2a;
+      --text-primary: #f5f5f5;
+      --text-secondary: #c9c9c9;
+      --text-muted: #9a9a9a;
+      --border-subtle: #3a3a3a;
+      --border-accent: #d4af37;
+      --accent-gold: #d4af37;
+      --cta-primary: #ff6b35;
+      --cta-primary-hover: #ff7e52;
+      --cta-text-dark: #111111;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --container: min(1240px, calc(100vw - 48px));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.65;
+    }
+
+    .container { width: var(--container); margin-inline: auto; }
+    section { padding: 96px 0; border-top: 1px solid rgba(212,175,55,.12); }
+    h1,h2,h3,h4 { font-family: "Playfair Display", Georgia, serif; margin: 0 0 16px; color: var(--text-primary); }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.05; letter-spacing: -.02em; }
+    h2 { font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.1; }
+    h3 { font-size: clamp(1.45rem, 3.2vw, 2rem); line-height: 1.2; }
+    p { margin: 0 0 16px; color: var(--text-secondary); font-size: clamp(1rem, 1.5vw, 1.125rem); }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin-bottom: 8px; color: var(--text-secondary); }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: .875rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      padding: 14px 24px;
+      transition: .24s ease;
+      border: 1px solid transparent;
+      font-size: 1rem;
+    }
+    .btn-primary {
+      background: var(--cta-primary);
+      color: var(--cta-text-dark);
+    }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--cta-primary-hover); box-shadow: 0 10px 24px rgba(255,107,53,.25); }
+    .btn-secondary {
+      border-color: rgba(212,175,55,.45);
+      color: var(--text-primary);
+      background: transparent;
+    }
+    .btn-secondary:hover { background: rgba(212,175,55,.08); border-color: rgba(212,175,55,.7); }
+
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      background: rgba(26,26,26,.92);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sticky-nav .inner {
+      width: var(--container);
+      margin: 0 auto;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { font-weight: 700; color: var(--text-primary); }
+    .anchors { display: flex; gap: 20px; flex-wrap: wrap; }
+    .anchors a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: .95rem;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+    }
+    .anchors a:hover { color: var(--text-primary); border-color: var(--accent-gold); }
+
+    .hero { padding-top: 80px; border-top: 0; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 48px;
+      align-items: end;
+    }
+    .hero-panel {
+      background: var(--bg-surface);
+      border: 1px solid rgba(212,175,55,.28);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .hero-panel .line {
+      width: 100%; height: 1px; background: rgba(212,175,55,.5); margin: 0 0 20px;
+    }
+    .trust-line { color: var(--text-muted); font-size: .96rem; margin-top: 14px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .filter-pill {
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(212,175,55,.35);
+      color: var(--text-secondary);
+      font-size: .875rem;
+    }
+    .filter-pill.active { color: var(--text-primary); border-color: var(--accent-gold); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid rgba(212,175,55,.35);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 6px 24px rgba(0,0,0,.28);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      transition: .22s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,175,55,.65);
+      box-shadow: 0 0 0 1px rgba(212,175,55,.25), 0 12px 30px rgba(0,0,0,.35);
+    }
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border: 1px solid rgba(212,175,55,.45);
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .icon { color: var(--accent-gold); margin-bottom: 8px; font-size: 1.2rem; }
+    .group { margin: 18px 0; }
+    .label { color: var(--text-primary); font-weight: 600; margin-bottom: 8px; }
+    .meta { margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(212,175,55,.18); }
+
+    .process-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+    .step-badge {
+      width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--accent-gold);
+      display: inline-flex; align-items: center; justify-content: center; color: var(--accent-gold); margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .why-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 24px; }
+    .why-item {
+      display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start;
+      padding: 16px 0; border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .investment-wrap {
+      background: var(--bg-surface);
+      border: 1px solid rgba(212,175,55,.28);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+    }
+    .divider-vert { border-left: 1px solid rgba(212,175,55,.35); padding-left: 24px; }
+    .bad-list li { list-style: none; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; background: rgba(255,107,53,.06); border: 1px solid rgba(255,107,53,.2); }
+    .good-list li { list-style: none; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; background: rgba(212,175,55,.08); border: 1px solid rgba(212,175,55,.22); }
+
+    .faq-wrap { display: grid; grid-template-columns: .85fr 1.15fr; gap: 28px; }
+    .faq-item { border-bottom: 1px solid var(--border-subtle); }
+    .faq-q {
+      width: 100%; background: none; border: 0; color: var(--text-primary); text-align: left;
+      padding: 16px 0; font: 600 1.1rem/1.4 Inter, sans-serif; cursor: pointer;
+      display: flex; justify-content: space-between; gap: 12px;
+    }
+    .faq-a { display: none; padding: 0 0 16px; color: var(--text-secondary); }
+    .faq-item.open .faq-a { display: block; }
+
+    .final-cta {
+      background: var(--bg-surface);
+      border: 1px solid rgba(212,175,55,.35);
+      border-radius: var(--radius-lg);
+      padding: 44px;
+      text-align: center;
+    }
+
+    .reveal {
+      will-change: transform, filter;
+      transform: translateY(16px);
+      filter: blur(10px) brightness(.78);
+    }
+    .reveal.is-visible {
+      animation-name: revealBlurSlideFade;
+      animation-duration: .8s;
+      animation-timing-function: cubic-bezier(.2,.7,.2,1);
+      animation-fill-mode: both;
+      animation-delay: var(--stagger, 0ms);
+    }
+
+    @keyframes revealBlurSlideFade {
+      0% {
+        transform: translateY(20px) translateX(0);
+        filter: blur(12px) brightness(.72);
+      }
+      45% {
+        transform: translateY(8px) translateX(0);
+        filter: blur(6px) brightness(.86);
+      }
+      100% {
+        transform: translateY(0) translateX(0);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    @keyframes revealBlurSlideFadeLeft {
+      0% {
+        transform: translateX(-18px);
+        filter: blur(12px) brightness(.72);
+      }
+      100% {
+        transform: translateX(0);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    @keyframes revealBlurSlideFadeRight {
+      0% {
+        transform: translateX(18px);
+        filter: blur(12px) brightness(.72);
+      }
+      100% {
+        transform: translateX(0);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    .reveal.from-left.is-visible {
+      animation-name: revealBlurSlideFadeLeft;
+      animation-fill-mode: both;
+    }
+
+    .reveal.from-right.is-visible {
+      animation-name: revealBlurSlideFadeRight;
+      animation-fill-mode: both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal.is-visible,
+      .reveal.from-left.is-visible,
+      .reveal.from-right.is-visible {
+        animation: none !important;
+        transform: none !important;
+        filter: none !important;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero-grid, .investment-wrap, .faq-wrap { grid-template-columns: 1fr; }
+      .divider-vert { border-left: 0; border-top: 1px solid rgba(212,175,55,.35); padding-left: 0; padding-top: 20px; }
+    }
+    @media (max-width: 760px) {
+      section { padding: 64px 0; }
+      .sticky-nav { position: static; }
+      .sticky-nav .inner { padding: 12px 0; align-items: flex-start; flex-direction: column; }
+      .services-grid, .process-grid, .why-grid { grid-template-columns: 1fr; }
+      .card, .investment-wrap, .final-cta { padding: 24px; }
+      .anchors { overflow-x: auto; white-space: nowrap; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow reveal from-left">Kreative Reflow Services</span>
+        <h1 class="reveal from-left" style="--stagger: 90ms">Services That Drive Results</h1>
+        <p class="reveal from-left" style="--stagger: 160ms">From stunning websites to strategic marketing, we deliver digital solutions that help your business grow. Transparent pricing, expert execution, measurable outcomes.</p>
+        <a class="btn btn-primary reveal from-left" style="--stagger: 230ms" href="#pricing">Get a Free Consultation →</a>
+        <p class="trust-line reveal from-left" style="--stagger: 300ms">Transparent pricing, fast turnaround, and post-launch support—built into every project.</p>
+      </div>
+      <aside class="hero-panel reveal from-right" style="--stagger: 240ms">
+        <div class="line"></div>
+        <p>From websites to growth campaigns, every engagement is built around clear deliverables, practical execution, and outcomes you can measure.</p>
+      </aside>
+    </div>
+  </section>
+
+  <nav class="sticky-nav" aria-label="Section navigation">
+    <div class="inner">
+      <div class="brand reveal" style="--stagger: 50ms">Kreative Reflow</div>
+      <div class="anchors reveal" style="--stagger: 120ms">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Our Services</h2>
+      </div>
+
+      <div class="filter-row reveal" style="--stagger: 70ms" aria-label="Service categories">
+        <span class="filter-pill active">All</span>
+        <span class="filter-pill">Websites</span>
+        <span class="filter-pill">Social</span>
+        <span class="filter-pill">Ads</span>
+        <span class="filter-pill">SEO</span>
+        <span class="filter-pill">Branding</span>
+        <span class="filter-pill">Development</span>
+      </div>
+
+      <div class="services-grid">
+
+        <article class="card reveal">
+          <span class="tag">WEBSITES</span>
+          <div class="icon">◌</div>
+          <h3>WordPress Website Design</h3>
+          <p>Custom, mobile-responsive websites built to convert visitors into leads. Fast turnaround, transparent pricing, and ongoing support included. Perfect for businesses ready to establish a professional online presence.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Custom Divi design tailored to your brand</li><li>Mobile-responsive (works on all devices)</li><li>SEO-optimized structure</li><li>Contact forms and lead capture</li><li>Google Analytics integration</li><li>Speed optimization</li><li>Security setup (SSL, backups)</li><li>30 days post-launch support</li><li>Training and documentation</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>Small businesses</li><li>Medical professionals</li><li>Service providers</li><li>Professional firms</li><li>Local businesses</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R8,000 - R25,000<br>Overseas: $800 - $2,500</p><p><strong>Timeline:</strong> 2-4 weeks</p><a class="btn btn-secondary" href="#pricing">View Website Packages →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">SOCIAL MEDIA</span>
+          <div class="icon">◌</div>
+          <h3>Social Media Management</h3>
+          <p>Strategic content that builds your brand and drives engagement. We handle the planning, creation, and posting so you can focus on running your business. Consistent, professional, results-driven.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Content strategy and calendar</li><li>Custom graphics and visuals (Canva Pro)</li><li>Copywriting for all posts</li><li>Platform management (Instagram, Facebook, LinkedIn)</li><li>Scheduling and posting</li><li>Community engagement</li><li>Monthly analytics reports</li><li>Hashtag research and optimization</li><li>Story and reel creation</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>Small businesses building brand awareness</li><li>Medical professionals establishing authority</li><li>Service providers attracting local clients</li><li>B2B companies generating leads</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R3,000 - R8,000/month<br>Overseas: $400 - $1,200/month</p><p><strong>Packages:</strong><br>Starter: 8-12 posts/month (2-3 per week)<br>Growth: 16-20 posts/month (4-5 per week)<br>Premium: 24-30 posts/month (daily posting)</p><a class="btn btn-secondary" href="#pricing">View Social Media Packages →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">ADVERTISING</span>
+          <div class="icon">◌</div>
+          <h3>Paid Ads Management</h3>
+          <p>Data-driven Google and Facebook ad campaigns that deliver measurable ROI. We handle strategy, setup, optimization, and monthly reporting. Turn ad spend into revenue.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Campaign strategy and planning</li><li>Audience research and targeting</li><li>Ad copywriting and creative</li><li>Landing page optimization</li><li>Conversion tracking setup</li><li>A/B testing and optimization</li><li>Budget management</li><li>Monthly performance reports</li><li>Ongoing optimization and scaling</li></ul></div>
+          <div class="group"><div class="label">Platforms</div><ul><li>Google Ads (Search, Display, YouTube)</li><li>Facebook &amp; Instagram Ads</li><li>LinkedIn Ads (B2B)</li></ul><div class="label">Ideal For</div><ul><li>Businesses ready to scale quickly</li><li>Service providers needing leads</li><li>E-commerce stores</li><li>Medical practices attracting new patients</li><li>B2B companies generating qualified leads</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R4,000 - R10,000/month + ad spend<br>Overseas: $500 - $1,500/month + ad spend</p><p><strong>Minimum Ad Spend:</strong> R5,000/month (SA) | $500/month (Overseas)</p><a class="btn btn-secondary" href="#pricing">Get Your Ad Strategy →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">LOCAL SEO</span>
+          <div class="icon">◌</div>
+          <h3>Local SEO</h3>
+          <p>Dominate local search and attract more customers with optimized Google Business Profile, local citations, and review management. Get found when it matters most.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Google Business Profile optimization</li><li>Local citation building (top directories)</li><li>Review generation and management</li><li>Local keyword optimization</li><li>Location-specific landing pages</li><li>Google Maps optimization</li><li>Competitor analysis</li><li>Monthly ranking reports</li><li>Ongoing optimization</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>Local service businesses (plumbers, electricians, contractors)</li><li>Medical professionals (dentists, doctors, specialists)</li><li>Restaurants and retail stores</li><li>Professional services (lawyers, accountants)</li><li>Any business serving a specific geographic area</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R3,000 - R8,000/month<br>Overseas: $400 - $1,000/month</p><p><strong>Timeline:</strong> Results in 2-4 months</p><a class="btn btn-secondary" href="#pricing">Boost Your Local Presence →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">SEO &amp; CONTENT</span>
+          <div class="icon">◌</div>
+          <h3>SEO &amp; Content Marketing</h3>
+          <p>Rank higher on Google and attract organic traffic with strategic SEO and high-quality content. From technical audits to blog posts, we help you get found online and establish authority in your industry.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Technical SEO audit</li><li>Keyword research and strategy</li><li>On-page optimization</li><li>Content creation (blog posts, guides, articles)</li><li>Link building and outreach</li><li>Competitor analysis</li><li>Google Search Console setup</li><li>Monthly traffic and ranking reports</li><li>Ongoing optimization</li></ul><div class="label">Content Deliverables</div><ul><li>2-4 blog posts per month (800-1,500 words)</li><li>SEO optimization for existing pages</li><li>Meta descriptions and title tags</li><li>Internal linking strategy</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>Businesses wanting national/international reach</li><li>E-commerce sites</li><li>B2B companies with longer sales cycles</li><li>Professional services building authority</li><li>Content-heavy businesses (blogs, resources)</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R5,000 - R15,000/month<br>Overseas: $600 - $1,800/month</p><p><strong>Timeline:</strong> Results in 3-6 months</p><a class="btn btn-secondary" href="#pricing">Start Ranking Higher →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">BRANDING</span>
+          <div class="icon">◌</div>
+          <h3>Branding &amp; Design</h3>
+          <p>Build a memorable brand that stands out. From logo design to complete visual identity systems, we create cohesive branding that reflects your values and resonates with your audience.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Brand strategy and positioning</li><li>Logo design (3-5 concepts, unlimited revisions)</li><li>Color palette and typography</li><li>Brand guidelines document</li><li>Business card design</li><li>Letterhead and email signature</li><li>Social media templates</li><li>Brand assets (icons, patterns, graphics)</li></ul><div class="label">Deliverables</div><ul><li>Logo files (AI, PNG, SVG, PDF)</li><li>Brand guidelines (PDF)</li><li>Print-ready files</li><li>Digital assets</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>New businesses launching</li><li>Established businesses rebranding</li><li>Companies with inconsistent branding</li><li>Businesses ready to scale professionally</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa: R8,000 - R25,000<br>Overseas: $800 - $2,500</p><p><strong>Timeline:</strong> 3-5 weeks</p><a class="btn btn-secondary" href="#pricing">Build Your Brand →</a></div>
+        </article>
+
+        <article class="card reveal">
+          <span class="tag">DEVELOPMENT</span>
+          <div class="icon">◌</div>
+          <h3>Web Applications</h3>
+          <p>Custom-built business tools, portals, and interactive solutions that automate processes and solve specific business challenges. From patient portals to dealer management systems, we build applications tailored to your needs.</p>
+          <div class="group"><div class="label">What’s Included</div><ul><li>Discovery and requirements gathering</li><li>UI/UX design and prototyping</li><li>Custom development (frontend + backend)</li><li>Database design and setup</li><li>API integrations</li><li>User authentication and roles</li><li>Testing and quality assurance</li><li>Deployment and hosting setup</li><li>Training and documentation</li><li>Post-launch support</li></ul><div class="label">Types of Applications</div><ul><li>Patient portals (booking, records, payments)</li><li>Dealer/distributor portals (ordering, inventory, reporting)</li><li>Custom CRM systems</li><li>Booking and scheduling systems</li><li>Inventory management tools</li><li>Business dashboards and analytics</li><li>Interactive calculators and tools</li></ul></div>
+          <div class="group"><div class="label">Ideal For</div><ul><li>Medical practices needing patient portals</li><li>Medical device companies needing dealer portals</li><li>Businesses with unique workflow requirements</li><li>Companies wanting to automate processes</li><li>Growing businesses needing custom tools</li></ul></div>
+          <div class="meta"><p><strong>Pricing:</strong><br>South Africa:<br>Simple: R25,000 - R50,000<br>Medium: R50,000 - R150,000<br>Complex: R150,000 - R500,000+<br><br>Overseas:<br>Simple: $2,500 - $5,000<br>Medium: $5,000 - $15,000<br>Complex: $15,000 - $50,000+</p><p><strong>Timeline:</strong> 4-24 weeks (depending on complexity)</p><a class="btn btn-secondary" href="#pricing">Discuss Your Project →</a></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>Our Process</h2><p>Simple, transparent, and results-focused. Here's how we bring your project to life.</p></div></div>
+      <div class="process-grid reveal" style="--stagger: 60ms">
+        <article class="card reveal"><span class="step-badge">1</span><h3>1. Discovery Call</h3><p>We start with a free consultation to understand your business, goals, and challenges. No pressure, just honest conversation about what you need.</p></article>
+        <article class="card reveal"><span class="step-badge">2</span><h3>2. Strategy &amp; Proposal</h3><p>We create a custom strategy and detailed proposal with clear pricing, timelines, and deliverables. You'll know exactly what to expect.</p></article>
+        <article class="card reveal"><span class="step-badge">3</span><h3>3. Execution &amp; Launch</h3><p>We get to work, keeping you updated every step of the way. Once complete, we launch your project and provide training and support.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="why-us">
+    <div class="container">
+      <h2 class="reveal">Why Work With Kreative Reflow?</h2>
+      <div class="why-grid reveal" style="--stagger: 70ms">
+        <div class="why-item"><div>◌</div><div><strong>Transparent Pricing</strong><p>No hidden fees or surprise charges. You'll know exactly what you're paying for upfront.</p></div></div>
+        <div class="why-item"><div>◌</div><div><strong>Fast Turnaround</strong><p>We respect your time. Most projects are completed in 2-6 weeks, not months.</p></div></div>
+        <div class="why-item"><div>◌</div><div><strong>Results-Driven</strong><p>We focus on outcomes that matter: more leads, more traffic, more revenue.</p></div></div>
+        <div class="why-item"><div>◌</div><div><strong>Ongoing Support</strong><p>We don't disappear after launch. Every project includes post-launch support and training.</p></div></div>
+        <div class="why-item"><div>◌</div><div><strong>Medical Industry Expertise</strong><p>With a background in medical sales, we understand the unique needs of healthcare professionals and medical device companies.</p></div></div>
+        <div class="why-item"><div>◌</div><div><strong>Global Experience, Local Understanding</strong><p>We serve clients in South Africa and internationally, bringing global best practices with local market knowledge.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <h2 class="reveal">Transparent, Custom Pricing</h2>
+      <p class="reveal" style="--stagger: 70ms">No cookie-cutter packages. No hidden fees. Just honest pricing based on what you actually need.</p>
+      <div class="investment-wrap reveal" style="--stagger: 130ms">
+        <div>
+          <p><strong>Here's how our pricing works:</strong></p>
+          <p>1️⃣ <strong>Free Consultation</strong><br>We discuss your goals, challenges, and budget. No pressure, just honest conversation.</p>
+          <p>2️⃣ <strong>Custom Proposal</strong><br>You receive a detailed proposal with clear pricing, timeline, and deliverables. Everything is transparent—no surprises.</p>
+          <p>3️⃣ <strong>Flexible Payment</strong><br>For larger projects, we offer milestone-based payments or payment plans to make it manageable.</p>
+          <p>4️⃣ <strong>Ongoing Support</strong><br>Every project includes post-launch support. We don't disappear after delivery.</p>
+          <a class="btn btn-primary" href="#final-cta">Get a Free Consultation →</a>
+        </div>
+        <div class="divider-vert">
+          <p><strong>What you'll never get from us:</strong></p>
+          <ul class="bad-list">
+            <li>❌ Hidden fees or surprise charges</li>
+            <li>❌ Vague timelines or scope creep</li>
+            <li>❌ Cookie-cutter solutions</li>
+            <li>❌ Pressure to buy services you don't need</li>
+          </ul>
+          <p><strong>What you will get:</strong></p>
+          <ul class="good-list">
+            <li>✅ Honest assessment of what you need</li>
+            <li>✅ Clear, detailed pricing</li>
+            <li>✅ Quality work that drives results</li>
+            <li>✅ Transparent communication every step</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container faq-wrap">
+      <div>
+        <h2 class="reveal">Frequently Asked Questions</h2>
+      </div>
+      <div>
+        <div class="faq-item open reveal" style="--stagger: 80ms"><button class="faq-q">Do you offer payment plans?<span>−</span></button><div class="faq-a">Yes. For projects over R25,000 (or $2,500), we offer flexible payment plans with milestone-based payments. Most projects are split 50/50 (upfront and on completion) or into 3-4 milestone payments.</div></div>
+        <div class="faq-item reveal" style="--stagger: 120ms"><button class="faq-q">How long does a typical project take?<span>+</span></button><div class="faq-a">Timelines vary by service:<br>- Websites: 2-4 weeks<br>- Branding: 3-5 weeks<br>- Web Applications: 4-24 weeks (depending on complexity)<br>- Monthly services (SEO, Social Media, Ads) are ongoing with results typically visible in 2-3 months.</div></div>
+        <div class="faq-item reveal" style="--stagger: 160ms"><button class="faq-q">Do you work with clients outside South Africa?<span>+</span></button><div class="faq-a">Absolutely. We serve clients globally, with a focus on the US, UK, Australia, and Canada. All communication is done via email, video calls, and project management tools.</div></div>
+        <div class="faq-item reveal" style="--stagger: 200ms"><button class="faq-q">What if I need changes after my website launches?<span>+</span></button><div class="faq-a">All website projects include 30 days of post-launch support for minor tweaks and bug fixes. After that, we offer affordable maintenance packages or hourly rates for updates.</div></div>
+        <div class="faq-item reveal" style="--stagger: 240ms"><button class="faq-q">Do you provide hosting and domain services?<span>+</span></button><div class="faq-a">We can set up hosting and domains for you, or work with your existing providers. We recommend reliable hosting partners and handle all technical setup.</div></div>
+        <div class="faq-item reveal" style="--stagger: 280ms"><button class="faq-q">Can you help with an existing website?<span>+</span></button><div class="faq-a">Yes. We offer website redesigns, updates, and optimization for existing sites. We can also migrate your site to a new platform if needed.</div></div>
+        <div class="faq-item reveal" style="--stagger: 320ms"><button class="faq-q">What makes you different from other agencies?<span>+</span></button><div class="faq-a">We combine technical expertise with industry-specific knowledge (especially in medical/healthcare). We're transparent with pricing, fast with delivery, and focused on results that matter to your business.</div></div>
+        <div class="faq-item reveal" style="--stagger: 360ms"><button class="faq-q">Do you offer custom packages?<span>+</span></button><div class="faq-a">Absolutely. Every business is unique. We create custom packages tailored to your specific needs, goals, and budget. Contact us for a personalized proposal.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="final-cta">
+    <div class="container">
+      <div class="final-cta reveal" style="--stagger: 80ms">
+        <h2>Ready to Grow Your Business?</h2>
+        <p>Let's discuss your project. Book a free consultation and get a custom proposal with transparent pricing and clear timelines.</p>
+        <a class="btn btn-primary" href="#top">Get a Free Consultation →</a>
+        <p style="margin-top:14px;color:var(--text-muted)">Or email us at: <a href="mailto:hello@kreativereflow.com" style="color:var(--text-primary)">hello@kreativereflow.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const revealNodes = [...document.querySelectorAll('.reveal')];
+
+    revealNodes.forEach((node, i) => {
+      if (!node.style.getPropertyValue('--stagger')) {
+        node.style.setProperty('--stagger', `${Math.min(i * 55, 520)}ms`);
+      }
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+    revealNodes.forEach((node) => revealObserver.observe(node));
+
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-q span').textContent = '+';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          item.querySelector('.faq-q span').textContent = '−';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
